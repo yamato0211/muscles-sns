@@ -1,13 +1,8 @@
-from typing import List
 from sqlalchemy.orm.session import Session
 from schemas.favorites import Favorites as FavoriteSchema
 from db.models import Post, Favorites
 from fastapi import HTTPException
 
-def get_all_favorites(db: Session, post_id: str) -> List[FavoriteSchema]:
-    favorites_orm = db.query(Favorites).filter(Favorites.post_id == post_id).all()
-    favorites = list(map(FavoriteSchema.from_orm,favorites_orm))
-    return favorites
 
 def create_favorites_by_ids(db: Session, post_id: str, user_id: str) -> FavoriteSchema:
     post = db.query(Post).filter(Post.post_id == post_id).first()

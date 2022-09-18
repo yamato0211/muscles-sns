@@ -4,16 +4,10 @@ from sqlalchemy.orm.session import Session
 from schemas.favorites import Favorites as FavoriteSchema
 from db.database import get_db
 from utils.jwt import get_current_user
-from cruds.favorites import create_favorites_by_ids, delete_favorites_by_ids, get_all_favorites
+from cruds.favorites import create_favorites_by_ids, delete_favorites_by_ids
 
 favorite_router = APIRouter()
 
-@favorite_router.get("/{post_id}", response_model=List[FavoriteSchema])
-async def get_favorites(post_id: str, db: Session = Depends(get_db), user_id: str = Depends(get_current_user)):
-    if user_id is None:
-        raise HTTPException(status_code=403, detail="jwt_token is invalid")
-    favorites = get_all_favorites(db, post_id)
-    return favorites
 
 @favorite_router.post("/{post_id}", response_model=FavoriteSchema)
 async def create_favorite(post_id: str, db: Session = Depends(get_db), user_id: str = Depends(get_current_user)):
