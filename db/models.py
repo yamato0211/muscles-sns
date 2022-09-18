@@ -31,4 +31,5 @@ class Post(Base):
     content = Column(String)
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
     user_id = Column(String, ForeignKey("users.user_id"))
+    user = relationship("User")
     favorites = relationship("User", secondary=Favorites.__tablename__)
