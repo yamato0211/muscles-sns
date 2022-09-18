@@ -3,14 +3,16 @@ from requests import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-DATABASE = "postgresql"
-USER = os.environ.get("POSTGRES_USER")
-PASSWORD = os.environ.get("POSTGRES_PASSWORD")
-HOST = os.environ.get("POSTGRES_HOST")
-NAME = os.environ.get("POSTGRES_NAME")
-SQLALCHEMY_DATABASE_URL = "{}://{}:{}@{}/{}".format(
-    DATABASE, USER, PASSWORD, HOST, NAME
-)
+# DATABASE = "postgresql"
+# USER = os.environ.get("POSTGRES_USER")
+# PASSWORD = os.environ.get("POSTGRES_PASSWORD")
+# HOST = os.environ.get("POSTGRES_HOST")
+# NAME = os.environ.get("POSTGRES_NAME")
+# SQLALCHEMY_DATABASE_URL = "{}://{}:{}@{}/{}".format(
+#     DATABASE, USER, PASSWORD, HOST, NAME
+# )
+
+SQLALCHEMY_DATABASE_URL = os.environ.get('DATABASE_URL').replace('postgres://', 'postgresql://', 1)
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL
