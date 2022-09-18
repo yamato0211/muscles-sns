@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 @app.get("/")
-async def hello():
+async def health():
     return {"message" : "Hello world!"}
 
 app.include_router(router, prefix="/api/v1")
