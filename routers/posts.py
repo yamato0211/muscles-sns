@@ -41,5 +41,12 @@ async def get_my_posts(db:Session = Depends(get_db), user_id: str = Depends(get_
 async def delete_post(post_id: str, db: Session = Depends(get_db), user_id: str = Depends(get_current_user)):
     if user_id is None:
         raise HTTPException(status_code=403, detail="jwt_token si invalid!")
-    delete_post_by_post_id(db, post_id)
+    delete_post_by_post_id(db, post_id, user_id)
     return {"detail" : "OK!!"}
+
+@post_router.get("/{uid}", response_model=List[PostSchema])
+async def get_user_posts(uid: str, db:Session = Depends(get_db), user_id: str = Depends(get_current_user)):
+    if user_id is None:
+        raise HTTPException(status_code=403, detail="jwt_token si invalid!")
+    posts = get_posts_by_user_id(db, uid)
+    return posts

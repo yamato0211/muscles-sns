@@ -11,6 +11,7 @@ class Post(BaseModel):
     user_id: str
     content: str
     created_at: datetime = None
+    user: User
     favorites: List[User]
 
     class Config:
