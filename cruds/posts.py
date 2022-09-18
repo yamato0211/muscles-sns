@@ -20,6 +20,13 @@ def get_timeline(db: Session) -> List[PostSchema]:
     posts = list(map(PostSchema.from_orm,posts_orm))
     return posts
 
+def get_post_detail_by_post_id(db: Session, post_id: str) -> PostSchema:
+    post_orm = db.query(Post).filter(Post.post_id == post_id).first()
+    if post_orm is None:
+        raise HTTPException(status_code=404, detail="post not found")
+    post = PostSchema.from_orm(post_orm)
+    return post
+
 def get_posts_by_user_id(db: Session, user_id: str) -> List[PostSchema]:
     posts_orm = db.query(Post).filter(Post.user_id == user_id).all()
     posts = list(map(PostSchema.from_orm, posts_orm))
