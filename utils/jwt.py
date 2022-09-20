@@ -31,7 +31,6 @@ def decode_token(token: str) -> str:
     return user_id
 
 def get_current_user(jwt_token: str = Header(None)) -> Optional[str]:
-    print('authorization: ', jwt_token)
     if jwt_token.find("Bearer ") != 0:
         raise HTTPException(status_code=400, detail="jwt_token is invarid")
     try: 
