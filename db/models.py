@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
@@ -9,6 +8,15 @@ Base = declarative_base()
 
 def create_uuid():
     return str(uuid4())
+
+
+class Comment(Base):
+    __tablename__ = "comments"
+    comment_id = Column(String, primary_key=True, default=create_uuid)
+    user_id = Column(String, ForeignKey("users.user_id"), primary_key=True)
+    post_id = Column(String, ForeignKey("posts.post_id"), primary_key=True)
+    content = Column(String)
+    user = relationship("User")
 
 
 class Favorites(Base):
@@ -33,3 +41,4 @@ class Post(Base):
     user_id = Column(String, ForeignKey("users.user_id"))
     user = relationship("User")
     favorites = relationship("User", secondary=Favorites.__tablename__)
+    comments = relationship("User",secondary=Comment.__tablename__)
