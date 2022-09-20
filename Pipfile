@@ -12,6 +12,8 @@ pydantic = {extras = ["email"], version = "*"}
 psycopg2 = "*"
 bcrypt = "*"
 pyjwt = "*"
+pytest = "*"
+sqlalchemy-utils = "*"
 
 [dev-packages]
 
