@@ -2,8 +2,7 @@ from typing import List
 from fastapi import HTTPException
 from sqlalchemy.orm.session import Session
 from schemas.posts import Post as PostSchema
-from schemas.users import User as UserSchema
-from db.models import Post, User
+from db.models import Post
 
 def create_post_by_user_id(db: Session, content: str, user_id: str) -> PostSchema:
     # user_orm = db.query(User).filter(User.user_id == user_id).first()
