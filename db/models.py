@@ -41,4 +41,4 @@ class Post(Base):
     user_id = Column(String, ForeignKey("users.user_id"))
     user = relationship("User")
     favorites = relationship("User", secondary=Favorites.__tablename__)
-    comments = relationship("User",secondary=Comment.__tablename__)
+    comments = relationship("Comment")
