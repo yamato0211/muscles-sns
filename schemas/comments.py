@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseModel
 from .users import User
 
@@ -11,6 +12,7 @@ class Comment(BaseModel):
     post_id: str
     content: str
     user: User
+    favorites: List[User]
 
     class Config:
         orm_mode = True    
