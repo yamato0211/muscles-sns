@@ -10,20 +10,15 @@ def create_uuid():
     return str(uuid4())
 
 
-class Comment(Base):
-    __tablename__ = "comments"
-    comment_id = Column(String, primary_key=True, default=create_uuid)
-    user_id = Column(String, ForeignKey("users.user_id"), primary_key=True)
-    post_id = Column(String, ForeignKey("posts.post_id"), primary_key=True)
-    content = Column(String)
-    user = relationship("User")
-
-
-class Favorites(Base):
-    __tablename__ = "favorites"
+class PostFavorites(Base):
+    __tablename__ = "post_favorites"
     user_id = Column(String, ForeignKey("users.user_id"), primary_key=True)
     post_id = Column(String, ForeignKey("posts.post_id"), primary_key=True)
 
+class CommentFavorites(Base):
+    __tablename__ = "comment_favorites"
+    user_id = Column(String, ForeignKey("users.user_id"), primary_key=True)
+    comment_id = Column(String, ForeignKey("comments.comment_id"), primary_key=True)
 
 class User(Base):
     __tablename__ = "users"
@@ -40,5 +35,15 @@ class Post(Base):
     created_at = Column(DateTime, default=datetime.now(), nullable=False)
     user_id = Column(String, ForeignKey("users.user_id"))
     user = relationship("User")
-    favorites = relationship("User", secondary=Favorites.__tablename__)
+    favorites = relationship("User", secondary=PostFavorites.__tablename__)
     comments = relationship("Comment")
+
+
+class Comment(Base):
+    __tablename__ = "comments"
+    comment_id = Column(String, primary_key=True, default=create_uuid)
+    user_id = Column(String, ForeignKey("users.user_id"))
+    post_id = Column(String, ForeignKey("posts.post_id"))
+    content = Column(String)
+    user = relationship("User")
+    favorites = relationship("User", secondary=CommentFavorites.__tablename__)
