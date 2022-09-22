@@ -1,6 +1,10 @@
 from pydantic import BaseModel
 from .users import User
 
+
+class CommentPayload(BaseModel):
+    content: str
+
 class Comment(BaseModel):
     comment_id: str
     user_id: str
